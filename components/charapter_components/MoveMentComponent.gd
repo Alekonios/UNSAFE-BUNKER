@@ -3,6 +3,7 @@ class_name MoveMentComponent
 extends CharacterBody3D
 
 @export var _StateMachine : StateMachine
+@export var _InventoryManager : InventoryManager
 
 @export var target_position : Vector3
 @export var target_rotation : Vector3

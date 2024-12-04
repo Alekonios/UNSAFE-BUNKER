@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=3 uid="uid://cbrpktbeo6t8g"]
+
+[ext_resource type="Script" path="res://components/charapter_components/managers/InventoryManager/inventory_manager.gd" id="1_y463d"]
+[ext_resource type="Material" uid="uid://bcqf2a422poaq" path="res://assets/textures/protoype_textures/materials/green/material_13.tres" id="2_npxbb"]
+[ext_resource type="Material" uid="uid://ddal25jay8fq1" path="res://assets/textures/protoype_textures/materials/purple/material_01.tres" id="3_b3v2t"]
+
+[node name="InventoryManager" type="Node3D"]
+script = ExtResource("1_y463d")
+
+[node name="ItemsList" type="Node3D" parent="."]
+
+[node name="Mop" type="Node3D" parent="ItemsList"]
+transform = Transform3D(0.054937, -0.533681, 0.8439, -0.528413, -0.732662, -0.428935, 0.847208, -0.422363, -0.322254, 0.11, 1.515, -0.357)
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="ItemsList/Mop"]
+transform = Transform3D(1.27584, 0, 0, 0, -1.27584, 0.000111468, 0, -0.000111468, -1.27584, 0, -0.107167, 0)
+radius = 0.0143979
+height = 1.36882
+material = ExtResource("2_npxbb")
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="ItemsList/Mop"]
+transform = Transform3D(1.27584, 0, 0, 0, -1.27584, 3.3278e-05, 0, -0.000111468, -0.380902, 0, 0.813505, 0)
+radius = 0.124274
+height = 0.0784343
+material = ExtResource("2_npxbb")
+
+[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="ItemsList/Mop"]
+transform = Transform3D(1.27584, 0, 0, 0, -1.27584, 1.45724e-05, 0, -0.000111461, -0.166805, 0, 0.894474, 0)
+radius = 0.124274
+height = 0.0784343
+material = ExtResource("3_b3v2t")
+
+[node name="Arm_Point1" type="Marker3D" parent="ItemsList/Mop"]
+transform = Transform3D(1, 0, -2.98023e-08, 0, 1, -2.98023e-08, 0, 0, 1, -0.00657237, -0.79523, -0.0132596)
+
+[node name="Arm_Point2" type="Marker3D" parent="ItemsList/Mop"]
+transform = Transform3D(1, 0, -2.98023e-08, 0, 1, -2.98023e-08, 0, 0, 1, -0.00478244, 0.255226, -0.00692356)

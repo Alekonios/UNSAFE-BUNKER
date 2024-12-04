@@ -25,4 +25,3 @@ func update_states():
 		Run:
 			#animator.set("parameters/Movement/transition_request", "run_")
 			sync_animator.play("run")
-			
