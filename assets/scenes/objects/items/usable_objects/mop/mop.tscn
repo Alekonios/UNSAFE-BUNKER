@@ -1,8 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://dy04o2ojh020i"]
+[gd_scene load_steps=7 format=3 uid="uid://dy04o2ojh020i"]
 
 [ext_resource type="Material" uid="uid://bcqf2a422poaq" path="res://assets/textures/protoype_textures/materials/green/material_13.tres" id="1_ybfb3"]
 [ext_resource type="Material" uid="uid://ddal25jay8fq1" path="res://assets/textures/protoype_textures/materials/purple/material_01.tres" id="2_0ng3f"]
 [ext_resource type="Script" path="res://components/hitbox_component/hitbox.gd" id="3_4u5eu"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ks0nm"]
+bounce = 0.4
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_2a2vx"]
 height = 1.91074
@@ -15,6 +18,7 @@ radius = 0.346949
 [node name="mop" type="RigidBody3D"]
 collision_layer = 12
 collision_mask = 6
+physics_material_override = SubResource("PhysicsMaterial_ks0nm")
 
 [node name="CSGCylinder3D" type="CSGCylinder3D" parent="."]
 transform = Transform3D(1.27584, 0, 0, 0, -1.27584, 0.000111468, 0, -0.000111468, -1.27584, 0, -0.107167, 0)
@@ -37,7 +41,7 @@ material = ExtResource("2_0ng3f")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CylinderShape3D_2a2vx")
 
-[node name="Hitbox" type="Area3D" parent="."]
+[node name="Hitbox" type="Area3D" parent="." node_paths=PackedStringArray("object")]
 collision_layer = 8
 collision_mask = 0
 script = ExtResource("3_4u5eu")
@@ -45,6 +49,7 @@ type = "UsableObject"
 _name = "Mop"
 have_rpc = true
 have_sender = true
+object = NodePath("..")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="Hitbox"]
 shape = SubResource("CylinderShape3D_jsi75")

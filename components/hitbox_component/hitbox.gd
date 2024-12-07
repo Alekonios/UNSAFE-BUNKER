@@ -7,6 +7,7 @@ extends Area3D
 @export var _name : String
 @export var have_rpc : bool
 @export var have_sender : bool
+@export var object : Node3D
 
 var sender
 
@@ -22,4 +23,7 @@ func RPC_interact(_sender):
 	sender = get_tree().root.get_node(_sender)
 	if multiplayer.get_remote_sender_id() == player:
 		sender._InventoryManager.Add_Item(_name)
+		object.queue_free()
+
+		
 	
