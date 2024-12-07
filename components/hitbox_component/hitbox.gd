@@ -21,5 +21,5 @@ func RPC_interact(_sender):
 	var player = multiplayer.get_remote_sender_id()
 	sender = get_tree().root.get_node(_sender)
 	if multiplayer.get_remote_sender_id() == player:
-		sender._InventoryManager.items.append(_name)
+		sender._InventoryManager.Add_Item(_name)
 	

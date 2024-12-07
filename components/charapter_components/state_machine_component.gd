@@ -13,6 +13,7 @@ var current_state = Idle
 func _process(delta: float) -> void:
 	update_states()
 	if Input.is_action_just_pressed("ui_accept"):
+		if !is_multiplayer_authority(): return
 		jump_anim.rpc()
 
 func update_states():

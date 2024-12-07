@@ -1,16 +1,73 @@
-[gd_scene load_steps=4 format=3 uid="uid://cbrpktbeo6t8g"]
+[gd_scene load_steps=9 format=3 uid="uid://cbrpktbeo6t8g"]
 
 [ext_resource type="Script" path="res://components/charapter_components/managers/InventoryManager/inventory_manager.gd" id="1_y463d"]
+[ext_resource type="Script" path="res://components/charapter_components/managers/InventoryManager/items/ItemComponent.gd" id="2_f7fo5"]
 [ext_resource type="Material" uid="uid://bcqf2a422poaq" path="res://assets/textures/protoype_textures/materials/green/material_13.tres" id="2_npxbb"]
 [ext_resource type="Material" uid="uid://ddal25jay8fq1" path="res://assets/textures/protoype_textures/materials/purple/material_01.tres" id="3_b3v2t"]
+[ext_resource type="PackedScene" uid="uid://dy04o2ojh020i" path="res://assets/scenes/objects/items/usable_objects/mop/mop.tscn" id="3_gits0"]
 
-[node name="InventoryManager" type="Node3D"]
+[sub_resource type="Animation" id="Animation_hwqvv"]
+resource_name = "use"
+length = 1.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6, 1, 1.36667, 1.76667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0.443314, 1.93557, -2.51676), Vector3(-0.293222, 1.91412, -2.78208), Vector3(0.443314, 1.93557, -2.51676), Vector3(-0.293222, 1.91412, -2.78208), Vector3(0.443314, 1.93557, -2.51676)]
+}
+
+[sub_resource type="Animation" id="Animation_o8s73"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.443314, 1.93557, -2.51676)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_r1ym8"]
+_data = {
+"RESET": SubResource("Animation_o8s73"),
+"use": SubResource("Animation_hwqvv")
+}
+
+[node name="InventoryManager" type="Node3D" node_paths=PackedStringArray("ItemsListNode")]
 script = ExtResource("1_y463d")
+ItemsListNode = NodePath("ItemsList")
+items_count = 3
 
 [node name="ItemsList" type="Node3D" parent="."]
 
-[node name="Mop" type="Node3D" parent="ItemsList"]
-transform = Transform3D(0.054937, -0.533681, 0.8439, -0.528413, -0.732662, -0.428935, 0.847208, -0.422363, -0.322254, 0.11, 1.515, -0.357)
+[node name="Air" type="Node3D" parent="ItemsList" node_paths=PackedStringArray("animator")]
+transform = Transform3D(1, 0, 0, 0, 0.999999, 0, 0, 0, 1, 0, 0.982705, 0)
+script = ExtResource("2_f7fo5")
+Item_Name = "Air"
+use_cd = 2.0
+animator = NodePath("")
+drop_item = ExtResource("3_gits0")
+defoult_item = true
+
+[node name="Mop" type="Node3D" parent="ItemsList" node_paths=PackedStringArray("animator")]
+transform = Transform3D(0.054937, -0.533681, 0.843899, -0.528413, -0.732662, -0.428936, 0.847208, -0.422363, -0.322254, 0.11, 0.980235, -0.270852)
+visible = false
+script = ExtResource("2_f7fo5")
+Item_Name = "Mop"
+use_cd = 2.0
+animator = NodePath("AnimationPlayer")
+drop_item = ExtResource("3_gits0")
+defoult_item = true
 
 [node name="CSGCylinder3D" type="CSGCylinder3D" parent="ItemsList/Mop"]
 transform = Transform3D(1.27584, 0, 0, 0, -1.27584, 0.000111468, 0, -0.000111468, -1.27584, 0, -0.107167, 0)
@@ -35,3 +92,8 @@ transform = Transform3D(1, 0, -2.98023e-08, 0, 1, -2.98023e-08, 0, 0, 1, -0.0065
 
 [node name="Arm_Point2" type="Marker3D" parent="ItemsList/Mop"]
 transform = Transform3D(1, 0, -2.98023e-08, 0, 1, -2.98023e-08, 0, 0, 1, -0.00478244, 0.255226, -0.00692356)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ItemsList/Mop"]
+libraries = {
+"": SubResource("AnimationLibrary_r1ym8")
+}
