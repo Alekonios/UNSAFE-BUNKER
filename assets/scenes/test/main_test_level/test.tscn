@@ -45,7 +45,7 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.40294, 0)
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://assets/scenes/charapters/Y-bot/Y-bot.tscn")
+_spawnable_scenes = PackedStringArray("res://assets/scenes/charapters/Y-bot/Y-bot.tscn", "res://assets/scenes/objects/items/usable_objects/mop/mop.tscn")
 spawn_path = NodePath("../player_node")
 spawn_limit = 5
 
