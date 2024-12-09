@@ -1,3 +1,5 @@
+class_name Server
+
 extends Node3D
 
 var player = preload("res://assets/scenes/charapters/Y-bot/Y-bot.tscn")
@@ -17,3 +19,12 @@ func remove_player(peer_id):
 	var player = %player_node.get_node_or_null(str(peer_id))
 	if player:
 		player.queue_free()
+
+@rpc("any_peer", "call_local")
+func add_item(object, _position, vector):
+	var a = load(object)
+	var b = a.instantiate()
+	add_child(b)
+	b.apply_central_impulse(vector * 8)
+	b.global_position = _position
+	

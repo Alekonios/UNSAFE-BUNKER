@@ -51,3 +51,6 @@ spawn_limit = 5
 
 [node name="mop" parent="." instance=ExtResource("3_naohr")]
 transform = Transform3D(0.693351, -0.638471, 0.334095, 0.720097, 0.596572, -0.354347, 0.0269286, 0.486268, 0.873395, -3.95946, 2.25298, -11.5757)
+
+[node name="mop2" parent="." instance=ExtResource("3_naohr")]
+transform = Transform3D(0.693351, -0.638471, 0.334095, 0.720097, 0.596572, -0.354347, 0.0269286, 0.486268, 0.873395, -2.18968, 2.25298, -11.5757)

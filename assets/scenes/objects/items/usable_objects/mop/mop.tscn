@@ -7,9 +7,9 @@
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ks0nm"]
 bounce = 0.4
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_2a2vx"]
-height = 1.91074
-radius = 0.0839929
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_t0tff"]
+radius = 0.0920321
+height = 2.1497
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_jsi75"]
 height = 1.91074
@@ -47,7 +47,7 @@ height = 0.0784343
 material = ExtResource("2_0ng3f")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("CylinderShape3D_2a2vx")
+shape = SubResource("CapsuleShape3D_t0tff")
 
 [node name="Hitbox" type="Area3D" parent="." node_paths=PackedStringArray("object")]
 collision_layer = 8

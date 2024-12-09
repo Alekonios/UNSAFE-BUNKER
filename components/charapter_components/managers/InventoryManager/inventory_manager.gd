@@ -2,6 +2,7 @@ class_name InventoryManager
 
 extends Node3D
 
+
 @export var InteractionCollider : RayCast3D
 @export var ItemsListNode : Node3D
 @export var drop_marker : Marker3D
@@ -10,11 +11,15 @@ extends Node3D
 @export var items_count : int
 
 @export var current_item_id = 0
+
+var scene_
 var current_item
 var last_item
 
 var ItemsList = ["Air"]
 
+func _ready() -> void:
+	scene_ = get_parent().get_parent().get_parent()
 
 func _input(event: InputEvent) -> void:
 	if !is_multiplayer_authority() : return
@@ -28,8 +33,8 @@ func interact():
 	if InteractionCollider.is_colliding() and InteractionCollider.get_collider() is Hitbox:
 		InteractionCollider.get_collider().interact(self.get_parent())
 
+@rpc("any_peer", "call_local")
 func Add_Item(Item_Name):
-	if !is_multiplayer_authority() : return
 	for child in ItemsListNode.get_children():
 		if child is Item: 
 			if child.Item_Name == Item_Name:
@@ -65,24 +70,17 @@ func Inicilization_Item():
 func Item_Use():
 	if current_item and current_item.animator != null:
 		current_item.animator.play("use")
-
 @rpc("any_peer", "call_local")
 func drop_item():
-	print(current_item_id)
-	print(ItemsList)
 	if current_item == null: return
 	if current_item.drop_item == null: return
 	var a
-	var b
-	var scene = get_tree().root
-	var vector = drop_marker.global_position - $"../Camera_Node".global_position
 	for child in ItemsListNode.get_children():
 		if child.Item_Name == ItemsList[current_item_id]:
 			a = child
-	b = a.drop_item.instantiate()
-	scene.add_child(b)
-	b.global_position = drop_marker.global_position
-	b.apply_central_impulse(vector * 8)
+	var vector = drop_marker.global_position - $"../Camera_Node".global_position
+	var c = a.drop_item.resource_path
+	scene_.add_item.rpc(c, drop_marker.global_position, vector)
 	ItemsList.remove_at(current_item_id)
 	current_item_id = 0
 	Inicilization_Item.rpc()
