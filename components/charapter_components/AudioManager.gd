@@ -45,6 +45,7 @@ func processMic():
 		if max_amplitude < input_started:
 			return
 		sendData.rpc(data)
+		print(data)
 		
 func process_voice():
 	if recordBuffer.size() <= 0 or playback == null:
@@ -56,6 +57,6 @@ func process_voice():
 func sendData(data: PackedFloat32Array):
 	recordBuffer.append_array(data)
 
-@rpc("any_peer", "unreliable_ordered")
+@rpc("any_peer", "reliable")
 func StreamedAudio():
 	playback = get_node(Import_Audio).get_stream_playback()
