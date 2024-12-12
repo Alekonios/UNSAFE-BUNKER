@@ -14,9 +14,20 @@ config/name="BUNKER-92"
 run/main_scene="res://user_interface/Main_Menu/main_menu.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 
+[audio]
+
+driver/enable_input=true
+
 [autoload]
 
 MultiplayerSingleton="*res://components/singletons/multiplayer_singleton/MultiplayerSingleton.gd"
+
+[display]
+
+window/size/viewport_width=1024
+window/size/viewport_height=512
+window/stretch/mode="canvas_items"
+window/stretch/aspect="keep_width"
 
 [file_customization]
 

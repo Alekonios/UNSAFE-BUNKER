@@ -5,11 +5,13 @@ extends Node
 @export var camera : Camera3D
 @export var Player : CharacterBody3D
 
+
+
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	if !is_multiplayer_authority(): return
 	camera.current = is_multiplayer_authority()
-	
+
 func _input(event: InputEvent) -> void:
 	if !is_multiplayer_authority(): return
 	camera.current = is_multiplayer_authority()

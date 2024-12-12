@@ -14,6 +14,7 @@ func add_player(peer_id):
 	var _player = player.instantiate()
 	_player.name = str(peer_id)
 	%player_node.add_child(_player)
+	_player._Voicemanager.setupAudio()
 	
 func remove_player(peer_id):
 	var player = %player_node.get_node_or_null(str(peer_id))

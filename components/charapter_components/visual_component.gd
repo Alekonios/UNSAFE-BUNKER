@@ -11,7 +11,8 @@ func _ready() -> void:
 	IK_head.start()
 	hide_ob()
 
-
+func _process(delta: float) -> void:
+	%FPS_bar.text = str(Engine.get_frames_per_second())
 
 func hide_ob():
 	if is_multiplayer_authority():
