@@ -17,18 +17,18 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	if is_multiplayer_authority():
-		StreamedAudio.rpc()
 		processMic()
 	process_voice()
 	
 
 func setupAudio():
 	if is_multiplayer_authority():
-		debug_cube.show()
 		input.stream = AudioStreamMicrophone.new()
 		input.play()
 		index = AudioServer.get_bus_index("Record")
 		effect = AudioServer.get_bus_effect(index, 0)
+	playback = get_node(Import_Audio).get_stream_playback()
+	
 	
 func processMic():
 	var stereoData: PackedVector2Array = effect.get_buffer(effect.get_frames_available())
@@ -45,7 +45,6 @@ func processMic():
 		if max_amplitude < input_started:
 			return
 		sendData.rpc(data)
-		print(data)
 		
 func process_voice():
 	if recordBuffer.size() <= 0 or playback == null:
@@ -56,7 +55,4 @@ func process_voice():
 @rpc("call_local", "any_peer", "unreliable_ordered")
 func sendData(data: PackedFloat32Array):
 	recordBuffer.append_array(data)
-
-@rpc("any_peer", "reliable")
-func StreamedAudio():
-	playback = get_node(Import_Audio).get_stream_playback()
+	
