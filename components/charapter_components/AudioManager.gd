@@ -9,7 +9,7 @@ extends Node
 var index : int
 var effect : AudioEffectCapture
 var playback : AudioStreamGeneratorPlayback
-var input_started = 0.005
+var input_started = 0.008
 var recordBuffer := PackedFloat32Array()
 
 func _ready() -> void:
@@ -27,7 +27,8 @@ func setupAudio():
 		input.play()
 		index = AudioServer.get_bus_index("Record")
 		effect = AudioServer.get_bus_effect(index, 0)
-	playback = get_node(Import_Audio).get_stream_playback()
+	if !is_multiplayer_authority():
+		playback = get_node(Import_Audio).get_stream_playback()
 	
 	
 func processMic():
