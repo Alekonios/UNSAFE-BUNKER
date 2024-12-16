@@ -9,17 +9,22 @@ extends Node
 var index : int
 var effect : AudioEffectCapture
 var playback : AudioStreamGeneratorPlayback
-var input_started = 0.008
+var input_started = 0.005
 var recordBuffer := PackedFloat32Array()
-var MAX_PACKET_SIZE = 1392  # MTU лимит (включает заголовки)
+var MAX_PACKET_SIZE = 1392 
 
 func _ready() -> void:
 	setupAudio()
 
-func _process(delta: float) -> void:
+
+func _on_timer_timeout() -> void:
 	if is_multiplayer_authority():
 		processMic()
 	process_voice()
+#func _process(delta: float) -> void:
+	#if is_multiplayer_authority():
+		#processMic()
+	#process_voice()
 
 func setupAudio():
 	if is_multiplayer_authority():
@@ -46,7 +51,6 @@ func processMic():
 		if max_amplitude < input_started:
 			return
 
-		# Отправка данных по фрагментам
 		send_audio_data(data)
 		
 func process_voice():
@@ -61,36 +65,27 @@ func process_voice():
 func sendData(data: PackedByteArray):
 	var unpacked_data = PackedFloat32Array()
 	for i in range(0, data.size(), 2):
-		var sample = int(data[i]) | (int(data[i + 1]) << 8)  # Сборка int16 из 2 байтов
+		var sample = int(data[i]) | (int(data[i + 1]) << 8)
 		if sample > 32767:
-			sample -= 65536  # Преобразование для отрицательных значений
-		var float_sample = float(sample) / 32767.0  # Возврат к диапазону [-1, 1]
+			sample -= 65536
+		var float_sample = float(sample) / 32767.0
 		unpacked_data.append(float_sample)
 	recordBuffer.append_array(unpacked_data)
 
-# Преобразование float32 (-1.0 до 1.0) в int16 (-32768 до 32767) и отправка по частям
-# Преобразование float32 (-1.0 до 1.0) в int16 (-32768 до 32767) и отправка по частям
 func send_audio_data(data: PackedFloat32Array):
-	# Преобразуем float в int16 и сохраняем в PackedByteArray
 	var byte_data = PackedByteArray()
 	for i in range(data.size()):
-		var sample_int16 = int(data[i] * 32767.0)  # Преобразуем float (-1.0 до 1.0) в int16 (-32768 до 32767)
-		byte_data.append(sample_int16 & 0xFF)  # младший байт
-		byte_data.append((sample_int16 >> 8) & 0xFF)  # старший байт
+		var sample_int16 = int(data[i] * 32767.0)
+		byte_data.append(sample_int16 & 0xFF)
+		byte_data.append((sample_int16 >> 8) & 0xFF)
 	
-	# Разбиваем byte_data на пакеты
 	var start_index = 0
 	while start_index < byte_data.size():
-		# Максимальный размер пакета, учитывая заголовок
 		var end_index = min(start_index + MAX_PACKET_SIZE, byte_data.size())
 		
-		# Проверяем, что end_index больше start_index
 		if start_index >= end_index:
 			break
 
-		# Изменён вызов slice
-		var packet = byte_data.slice(start_index, end_index)  # Теперь не вычитание, а конечный индекс
+		var packet = byte_data.slice(start_index, end_index)
 		sendData.rpc(packet)
-
-		# Сдвигаем индекс на длину пакета
 		start_index = end_index
