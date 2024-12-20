@@ -11,20 +11,15 @@ var effect : AudioEffectCapture
 var playback : AudioStreamGeneratorPlayback
 var input_started = 0.005
 var recordBuffer := PackedFloat32Array()
-var MAX_PACKET_SIZE = 1392 
+var MAX_PACKET_SIZE = 1000
 
 func _ready() -> void:
 	setupAudio()
-
 
 func _on_timer_timeout() -> void:
 	if is_multiplayer_authority():
 		processMic()
 	process_voice()
-#func _process(delta: float) -> void:
-	#if is_multiplayer_authority():
-		#processMic()
-	#process_voice()
 
 func setupAudio():
 	if is_multiplayer_authority():
