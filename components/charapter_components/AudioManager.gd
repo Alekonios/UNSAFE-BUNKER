@@ -9,7 +9,7 @@ extends Node
 var index : int
 var effect : AudioEffectCapture
 var playback : AudioStreamGeneratorPlayback
-var input_started = 0.005
+var input_started = 0.01
 var recordBuffer := PackedFloat32Array()
 var MAX_PACKET_SIZE = 1000
 

@@ -79,6 +79,7 @@ func drop_item():
 		if child.Item_Name == ItemsList[current_item_id]:
 			a = child
 	var vector = drop_marker.global_position - $"../Camera_Node".global_position
+	if a.drop_item == null: return
 	var c = a.drop_item.resource_path
 	scene_.add_item.rpc(c, drop_marker.global_position, vector)
 	ItemsList.remove_at(current_item_id)
