@@ -2,6 +2,8 @@ class_name VoiceManager
 
 extends Node
 
+@export var datas : int
+
 @export var input : AudioStreamPlayer
 @export var Import_Audio : NodePath
 @export var debug_cube : Node3D
@@ -9,9 +11,9 @@ extends Node
 var index : int
 var effect : AudioEffectCapture
 var playback : AudioStreamGeneratorPlayback
-var input_started = 0.01
+var input_started = 0.03
 var recordBuffer := PackedFloat32Array()
-var MAX_PACKET_SIZE = 1000
+var MAX_PACKET_SIZE = 512
 
 func _ready() -> void:
 	setupAudio()

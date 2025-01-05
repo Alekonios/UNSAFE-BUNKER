@@ -13,6 +13,7 @@ config_version=5
 config/name="BUNKER-92"
 run/main_scene="res://user_interface/Main_Menu/main_menu.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
+run/max_fps=60
 
 [audio]
 
